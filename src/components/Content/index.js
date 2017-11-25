@@ -3,11 +3,11 @@ import Fecha from "./content-components/Fecha/index";
 import Solucion from "./content-components/Solucion/index";
 import InputText from "./content-components/InputText/index";
 import Select from "./content-components/Select/index";
-import axios from 'axios';
+//import axios from 'axios';
 
 import problemas from '../../data/problemas';
 import oficinas from '../../data/oficina';
-import baseURL from '../../data/config';
+//import baseURL from '../../data/config';
 
 import styles from './content.css';
 
@@ -45,8 +45,7 @@ class Content extends Component{
          valorNmr: null,
          usuario: null,
          tecnico: null,
-         isNumber: false,
-         problemas: []
+         isNumber: false
 
       };
 
@@ -55,9 +54,9 @@ class Content extends Component{
    }
 
    componentWillMount(){
-      this.setState({
+      /*this.setState({
          problemas: problemas
-      });
+      });*/
    }
 
    handleChange(e){
@@ -109,7 +108,7 @@ class Content extends Component{
                <Select
                   clase={styles.separar_hijos} spanText="PROBLEMA:"
                   contenedor={styles.container} selectClass={styles.input}
-                  opciones={this.state.problemas}
+                  opciones={problemas}
                />
                <Fecha
                   clase={styles.separar_hijos} spanText="FECHA REVISION"

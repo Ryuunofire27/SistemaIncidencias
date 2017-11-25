@@ -13,7 +13,7 @@ class Select extends React.Component{
                {opciones && opciones.map((opcion, key) =>{
                   //console.log(opcion);
                   return(
-                     <option value={opcion.id} key={key}>{opcion.opcion}</option>
+                     <option value={/*opcion.id*/key} key={key}>{opcion.opcion}</option>
                   );
                })}
 

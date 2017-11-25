@@ -3,14 +3,14 @@ import baseURL from './config';
 
 let problema = Array();
 
-axios.get(baseURL.problemasURL + 'all', baseURL.headers)
+/*axios.get(baseURL.problemasURL + 'all', baseURL.headers)
    .then((respuesta) => {
       problema = respuesta.data.map((p,key) => {
          problema.push({
             id: p.id,
             opcion: p.tipo
          });
-      });
+      });*/
       /*console.log(respuesta.data);
       response = respuesta.data;
       console.log(response);*/
@@ -23,15 +23,15 @@ axios.get(baseURL.problemasURL + 'all', baseURL.headers)
          console.log(problema[i]);
       }*/
       //console.log(problema);
-   })
+   /*})
    .catch((error) => {
       console.log(error);
-   });
+   });*/
 //console.log(problema);
-console.log("problema");
+/*console.log("problema");
 console.log(problema);
-
-/*export default [
+*/
+export default [
    {
       opcion: 'virus'
    },
@@ -41,7 +41,7 @@ console.log(problema);
    {
       opcion: 'falla electrica'
    }
-];*/
+];
 /*let problema = [
    {
       opcion: 'virus'
@@ -57,4 +57,4 @@ console.log(problema);
    console.log("gola");
    console.log("problema" +i + problema[0].id + " "+problema.opcion)
 }*/
-export default problema;
+//export default problema;
