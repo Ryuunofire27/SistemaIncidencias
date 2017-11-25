@@ -1,0 +1,132 @@
+.root{
+    margin: auto;
+}
+
+.separar_hijos{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+}
+
+.separar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+    flex-direction: column;
+}
+
+.content_area{
+    display: flex;
+    align-items: center;
+    height: 300px;
+}
+
+.txtarea{
+    font-size: 20px;
+    margin: auto;
+    resize: none;
+}
+
+.botones{
+    display: flex;
+    flex-direction: column;
+}
+
+.botones button{
+    height: 40px;
+}
+
+.fecha_t{
+    margin: auto;
+}
+
+@media (min-width: 320px) {
+    .root{
+        width: 95%;
+    }
+
+    .container{
+        width: 280px;
+    }
+
+    .input{
+        width: 120px;
+    }
+
+    .txtarea{
+        width: 500px;
+        height: 200px;
+    }
+
+}
+
+@media (min-width: 481px) {
+    .root{
+        width: 90%;
+    }
+
+    .separar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 65px;
+        flex-direction: inherit;
+    }
+    .botones{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: inherit;
+    }
+
+}
+
+@media (min-width: 768px){
+    .root{
+        width: 85%;
+    }
+
+    .container{
+        width: 300px;
+    }
+
+    .input{
+        width: 150px;
+    }
+
+    .txtarea{
+        width: 550px;
+        height: 200px;
+    }
+
+    .fecha_t{
+        margin: 0px;
+    }
+
+}
+
+@media (min-width: 1020px){
+    .root{
+        width: 70%;
+    }
+
+    .txtarea{
+        width: 600px;
+        height: 200px;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .root{
+        width: 60%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .root{
+        width: 50%;
+    }
+}

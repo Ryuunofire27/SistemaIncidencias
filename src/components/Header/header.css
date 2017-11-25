@@ -1,0 +1,24 @@
+.root{
+    text-align: center;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #b7fff1;
+    border-bottom: 1px solid silver;
+}
+
+/*.titulo{
+    /*animation: ocultar-titulo 6s;*/
+    /*transform: 10s;
+    display: none;
+
+}*/
+
+@keyframes ocultar-titulo {
+
+    100%{
+        display: none;
+        text-indent: -100em;
+    }
+}

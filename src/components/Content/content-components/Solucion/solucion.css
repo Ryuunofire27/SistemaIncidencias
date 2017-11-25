@@ -1,0 +1,43 @@
+.root{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.txtarea{
+    height: 60px;
+    width: 80%;
+    resize: none;
+}
+@media (min-width: 480px) {
+    .txtarea{
+        height: 60px;
+        width: 250px;
+    }
+}
+
+@media (min-width: 767px){
+
+    .txtarea{
+        width: 400px;
+        height: 80px;
+    }
+
+}
+
+@media (min-width: 1020px){
+
+    .txtarea{
+        width: 500px;
+        height: 100px;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .txtarea{
+        height: 120px;
+        width: 600px;
+    }
+}
