@@ -98,18 +98,29 @@ class Content extends Component{
                   name="numero" Id="valorNmr" valor={this.state.valorNmr}
                   cambio={this.handleChange}
                />
-               <Select
-                  clase={styles.separar_hijos} spanText="OFICINA:"
-                  contenedor={styles.container} selectClass={styles.input}
-                  opciones={oficinas}
-               />
+               {
+                  oficinas.then(response =>{
+                     return(
+                        <Select
+                           clase={styles.separar_hijos} spanText="OFICINA:"
+                           contenedor={styles.container} selectClass={styles.input}
+                           opciones={response.data}
+                        />
+                     )
+                  })
+               }
             </div>
             <div className={styles.separar}>
-               <Select
-                  clase={styles.separar_hijos} spanText="PROBLEMA:"
-                  contenedor={styles.container} selectClass={styles.input}
-                  opciones={problemas}
-               />
+               {
+                  problemas.then(response =>{
+                     return (<Select
+                        clase={styles.separar_hijos} spanText="PROBLEMA:"
+                        contenedor={styles.container} selectClass={styles.input}
+                        opciones={response.data}
+                     />)
+                  })
+
+               }
                <Fecha
                   clase={styles.separar_hijos} spanText="FECHA REVISION"
                   contenedor={styles.container} inputClass={styles.input}
