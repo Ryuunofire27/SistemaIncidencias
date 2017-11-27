@@ -3,38 +3,11 @@ import Fecha from "./content-components/Fecha/index";
 import Solucion from "./content-components/Solucion/index";
 import InputText from "./content-components/InputText/index";
 import Select from "./content-components/Select/index";
-//import axios from 'axios';
-
-import problemas from '../../data/problemas';
-import oficinas from '../../data/oficina';
-//import baseURL from '../../data/config';
+import axios from 'axios';
+import url from '../../data/config';
 
 import styles from './content.css';
-
-/*axios.get(baseURL.incidenciaURL + 'all', baseURL.headers)
-   .then((respuesta)=>{
-      console.log(respuesta.data);
-   })
-   .catch((error)=>{
-     console.log(error);
-   });
-
-axios.get(baseURL.incidenciaURL + '1', baseURL.headers)
-   .then((response)=>{
-      console.log(response.data);
-   })
-   .catch((error)=>{
-      console.log(error)
-   });
-
-axios.get(baseURL.problemasURL + 'all', baseURL.headers)
-   .then((respuesta)=>{
-      console.log(respuesta.data);
-   })
-   .catch((error)=>{
-      console.log(error);
-   });
-*/
+import Reporte from "./content-components/Reporte/index";
 
 class Content extends Component{
 
@@ -45,21 +18,59 @@ class Content extends Component{
          valorNmr: null,
          usuario: null,
          tecnico: null,
-         isNumber: false
+         isNumber: false,
+         problemas: null,
+         oficinas: null,
+         solucion: null,
+         problemaSelected: null,
+         oficinaSelected: null,
+         fechaRevision: null,
+         fechaTermino: null,
+         reporte: ""
 
       };
 
-      this.handleChange = this.handleChange.bind(this);
-      this.handleButton = this.handleButton.bind(this);
+      this.handleInputChange = this.handleInputChange.bind(this);
+      this.handleInsertarButton = this.handleInsertarButton.bind(this);
+      this.handleModificarButton = this.handleModificarButton.bind(this);
+      this.handleEliminarButton=this.handleEliminarButton.bind(this);
+      this.handleReporteButton = this.handleReporteButton.bind(this);
+      this.handleOficinaSelected = this.handleOficinaSelected.bind(this);
+      this.handleProblemaSelected = this.handleProblemaSelected.bind(this);
+      this.handleFRChange = this.handleFRChange.bind(this);
+      this.handleFTChange = this.handleFTChange.bind(this);
+      this.handleTA = this.handleTA.bind(this);
    }
 
    componentWillMount(){
-      /*this.setState({
-         problemas: problemas
-      });*/
+      const fecha = new Date();
+      const fechaActual = `${fecha.getFullYear()}-${fecha.getMonth()}-${fecha.getDate()}`;
+      this.setState({
+         fechaRevision: fechaActual,
+         fechaTermino: fechaActual
+      });
+      axios.get(url.problemasURL + 'all', url.headers)
+         .then(res =>{
+            const problemas = res.data;
+            this.setState({problemas});
+         })
+         .catch(err=>{
+            console.log(err);
+         });
+
+      axios.get(url.oficinasURL + 'all', url.headers)
+         .then(res =>{
+            const oficinas = res.data;
+            this.setState({oficinas});
+         })
+         .catch(err=>{
+            console.log(err);
+         });
+
+
    }
 
-   handleChange(e){
+   handleInputChange(e){
       let valor = e.target.value;
       if(e.target.id==="valorNmr"){
          if(!isNaN(valor)) {
@@ -83,10 +94,113 @@ class Content extends Component{
       console.log(window.scrollY);
    }
 
-   handleButton(){
-      console.log(this.state.valorNmr + " " + this.state.usuario + " " + this.state.tecnico + " " + this.state.isNumber);
-
+   handleFRChange(e){
+      this.setState({
+         fechaRevision: e.target.value
+      })
    }
+
+   handleFTChange(e){
+      this.setState({
+         fechaTermino: e.target.value
+      })
+   }
+
+   handleOficinaSelected(e){
+      this.setState({
+         oficinaSelected: e.target.value
+      });
+   }
+
+   handleProblemaSelected(e){
+      this.setState({
+         problemaSelected: e.target.value
+      });
+   }
+
+   handleInsertarButton() {
+      if(this.state.oficinaSelected===(0||null) || this.state.problemaSelected===(0||null)
+         || this.state.usuario===null){
+         alert("problema, usuario y oficina no deben estar en blanco");
+      }else{
+         const incidencia = {
+            oficina: this.state.oficinaSelected,
+            problema: this.state.problemaSelected,
+            fechaRevision: this.state.fechaRevision,
+            fechaTermino: this.state.fechaTermino,
+            usuario: this.state.usuario,
+            tecnico: this.state.tecnico,
+            solucion: this.state.solucion
+         };
+         console.log(incidencia.fechaRevision);
+         /*axios.put(url.incidenciaURL+'new',incidencia, url.headers)
+            .then(res=>{
+               alert(res.data);
+            })
+            .catch(err=>{
+               console.log(err);
+            });*/
+      }
+   }
+
+   handleModificarButton(){
+      const incidencia = {
+         idIncidencia: this.state.valorNmr,
+         oficina: this.state.oficinaSelected,
+         problema: this.state.problemaSelected,
+         fechaRevision: this.state.fechaRevision,
+         fechaTermino: this.state.fechaTermino,
+         usuario: this.state.usuario,
+         tecnico: this.state.tecnico,
+         solucion: this.state.solucion
+      };
+      axios.post(url.incidenciaURL+'set',incidencia,url.headers)
+         .then(res=>{
+            console.log(res);
+         })
+         .catch(err=>{
+            console.log(err);
+         });
+      this.handleReporteButton();
+   }
+
+   handleEliminarButton(){
+      axios.delete(url.incidenciaURL+this.state.valorNmr,url.headers)
+         .then(res=>{
+            console.log(res);
+         })
+         .catch(err=>{
+            console.log(err);
+         });
+   }
+
+   handleReporteButton(){
+      axios.get(url.incidenciaURL + 'all' ,url.headers)
+         .then(res =>{
+            this.setState({
+               reporte: this.handleTA(res.data)
+            });
+         })
+         .catch(err=>{
+            console.log(err);
+         });
+   }
+
+   handleTA(reporte){
+      let cadena = "";
+
+      reporte && reporte.map((report,key)=>{
+         console.log(report);
+         cadena = cadena +`${key+1}) id:${report.id} usuario:${report.usuario}`
+                  + ` oficina:${report.oficina} problema:${report.problema}`
+                  + ` tecnico:${report.tecnico} fecha-revision:${report.fechaRevision}`
+                  + ` fecha-termino:${report.fechaTermino} solucion:${report.solucion}\n`;
+      });
+
+      return cadena;
+   }
+
+
 
    render(){
       return(
@@ -96,47 +210,37 @@ class Content extends Component{
                   clase={styles.separar_hijos} spanText="NRO:"
                   contenedor={styles.container} inputClass={styles.input}
                   name="numero" Id="valorNmr" valor={this.state.valorNmr}
-                  cambio={this.handleChange}
+                  cambio={this.handleInputChange}
                />
-               {
-                  oficinas.then(response =>{
-                     return(
-                        <Select
-                           clase={styles.separar_hijos} spanText="OFICINA:"
-                           contenedor={styles.container} selectClass={styles.input}
-                           opciones={response.data}
-                        />
-                     )
-                  })
-               }
+               <Select
+                  clase={styles.separar_hijos} spanText="OFICINA:"
+                  contenedor={styles.container} selectClass={styles.input}
+                  opciones={this.state.oficinas} selected={this.handleOficinaSelected}
+               />
             </div>
             <div className={styles.separar}>
-               {
-                  problemas.then(response =>{
-                     return (<Select
-                        clase={styles.separar_hijos} spanText="PROBLEMA:"
-                        contenedor={styles.container} selectClass={styles.input}
-                        opciones={response.data}
-                     />)
-                  })
-
-               }
+               <Select
+                  clase={styles.separar_hijos} spanText="PROBLEMA:"
+                  contenedor={styles.container} selectClass={styles.input}
+                  opciones={this.state.problemas} selected={this.handleProblemaSelected}
+               />
                <Fecha
                   clase={styles.separar_hijos} spanText="FECHA REVISION"
                   contenedor={styles.container} inputClass={styles.input}
-                  name="fecha-revision"
+                  name="fecha-revision" selected={this.handleFRChange}
+                  fecha={this.state.fechaRevision}
                />
             </div>
             <div className={styles.separar}>
                <InputText
                   clase={styles.separar_hijos} spanText="USUARIO:"
                   contenedor={styles.container} inputClass={styles.input}
-                  name="usuario" Id="usuario" cambio={this.handleChange}
+                  name="usuario" Id="usuario" cambio={this.handleInputChange}
                />
                <InputText
                   clase={styles.separar_hijos} spanText="TECNICO:"
                   contenedor={styles.container} inputClass={styles.input}
-                  name="tecnico" Id="tecnico" cambio={this.handleChange}
+                  name="tecnico" Id="tecnico" cambio={this.handleInputChange}
                />
             </div>
             <Solucion/>
@@ -144,20 +248,23 @@ class Content extends Component{
                <Fecha
                   clase={styles.separar_hijos + " " + styles.fecha_t} spanText="FECHA TERMINO"
                   contenedor={styles.container} inputClass={styles.input}
-                  name="fecha-termino"
+                  name="fecha-termino" selected ={this.handleFTChange}
+                  fecha={this.state.fechaTermino}
                />
             </div>
             <div className={styles.content_area}>
-               <textarea className={styles.txtarea}>
-
-               </textarea>
+               <Reporte clase={styles.txtarea} reporte={this.state.reporte}>
+                  {this.state.reporte}
+               </Reporte>
             </div>
             <div className={styles.botones}>
-               <button onClick={this.handleButton}>INSERTAR</button>
-               <button>MODIFICAR</button>
-               <button>ELIMINAR</button>
-               <button>REPORTE</button>
+               <button onClick={this.handleInsertarButton}>INSERTAR</button>
+               <button onClick={this.handleModificarButton}>MODIFICAR</button>
+               <button onClick={this.handleEliminarButton}>ELIMINAR</button>
+               <button onClick={this.handleReporteButton}>REPORTE</button>
             </div>
+            <br/>
+            <br/>
          </div>
       );
    }

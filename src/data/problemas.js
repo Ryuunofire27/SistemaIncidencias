@@ -9,4 +9,4 @@ import url from './config';
 
 //console.log(problemas);
 
-export default axios.get(url.problemasURL + 'all', url.headers);
+//export default axios.get(url.problemasURL + 'all', url.headers);

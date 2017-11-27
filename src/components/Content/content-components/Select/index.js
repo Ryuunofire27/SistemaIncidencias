@@ -2,14 +2,24 @@ import React from 'react';
 
 class Select extends React.Component{
 
+   constructor(props){
+      super(props);
+
+      this.handleChangeSelected = this.handleChangeSelected.bind(this);
+   }
+
+   handleChangeSelected(e){
+      this.props.selected(e)
+   }
+
    render(){
-      let opciones = this.props.opciones;
-      console.log(opciones);
+      const opciones = this.props.opciones;
       return(
          <div
             className={this.props.contenedor + " " + this.props.clase}>
             <span>{this.props.spanText}</span>
-            <select className={this.props.selectClass}>
+            <select className={this.props.selectClass} onChange={this.handleChangeSelected} required>
+               <option value='0'>----</option>
                {
                   opciones && opciones.map((opcion, key)=>{
                      return(

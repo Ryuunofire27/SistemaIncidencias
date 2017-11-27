@@ -41,4 +41,3 @@ axios.get(url.oficinasURL + 'all', url.headers)
 
 //console.log(oficinas);
 
-export default axios.get(url.oficinasURL + 'all', url.headers);
