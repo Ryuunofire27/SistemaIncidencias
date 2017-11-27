@@ -132,14 +132,13 @@ class Content extends Component{
             tecnico: this.state.tecnico,
             solucion: this.state.solucion
          };
-         console.log(incidencia.fechaRevision);
-         /*axios.put(url.incidenciaURL+'new',incidencia, url.headers)
+         axios.put(url.incidenciaURL+'new',incidencia, url.headers)
             .then(res=>{
                alert(res.data);
             })
             .catch(err=>{
                console.log(err);
-            });*/
+            });
       }
    }
 
