@@ -4,7 +4,7 @@ export default {
    oficinasURL: 'http://mate-discretas.herokuapp.com/rest/oficina/',
    headers: {
          'Access-Control-Allow-Origin' : "*",
-         'Accept': 'applicaiton/json',
+         'Accept': 'application/json',
          'Content-type': 'application/json'
       }
 };

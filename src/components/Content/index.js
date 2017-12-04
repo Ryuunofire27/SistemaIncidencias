@@ -58,7 +58,7 @@ class Content extends Component{
             console.log(err);
          });
 
-      axios.get(url.oficinasURL + 'all', url.headers)
+      axios.get(url.oficinasURL + 'all')
          .then(res =>{
             const oficinas = res.data;
             this.setState({oficinas});
@@ -134,7 +134,7 @@ class Content extends Component{
          };
          axios.put(url.incidenciaURL+'new',incidencia, url.headers)
             .then(res=>{
-               alert(res.data);
+               console.log(res.data);
             })
             .catch(err=>{
                console.log(err);
@@ -155,7 +155,7 @@ class Content extends Component{
       };
       axios.post(url.incidenciaURL+'set',incidencia,url.headers)
          .then(res=>{
-            console.log(res);
+            console.log(res.data);
          })
          .catch(err=>{
             console.log(err);
@@ -166,7 +166,7 @@ class Content extends Component{
    handleEliminarButton(){
       axios.delete(url.incidenciaURL+this.state.valorNmr,url.headers)
          .then(res=>{
-            console.log(res);
+            console.log(res.data);
          })
          .catch(err=>{
             console.log(err);
@@ -190,7 +190,7 @@ class Content extends Component{
 
       reporte && reporte.map((report,key)=>{
          console.log(report);
-         cadena = cadena +`${key+1}) id:${report.id} usuario:${report.usuario}`
+         cadena = cadena +`${key+1}) id:${report.idIncidencia} usuario:${report.usuario}`
                   + ` oficina:${report.oficina} problema:${report.problema}`
                   + ` tecnico:${report.tecnico} fecha-revision:${report.fechaRevision}`
                   + ` fecha-termino:${report.fechaTermino} solucion:${report.solucion}\n`;
